@@ -9,10 +9,14 @@ import ContactPage from '@/pages/ContactPage';
 import SearchResultsPage from '@/pages/SearchResultsPage';
 import ProfessionalProfilePage from '@/pages/ProfessionalProfilePage';
 import BlogPage from '@/pages/BlogPage';
+// Admin Pages
+import AdminLayout from '@/components/layout/AdminLayout'; // Import AdminLayout
 import AdminDashboardPage from '@/pages/admin/AdminDashboardPage';
 import AdminUserManagementPage from '@/pages/admin/AdminUserManagementPage';
 import AdminSubscriptionManagementPage from '@/pages/admin/AdminSubscriptionManagementPage';
 import AdminValidationPage from '@/pages/admin/AdminValidationPage';
+import AdminCouponsPage from '@/pages/admin/AdminCouponsPage'; // Import AdminCouponsPage
+// Professional Pages
 import ProfessionalDashboardPage from '@/pages/professional/ProfessionalDashboardPage'; 
 import ProfessionalAppointmentsPage from '@/pages/professional/ProfessionalAppointmentsPage';
 import ProfessionalPatientsPage from '@/pages/professional/ProfessionalPatientsPage';
@@ -103,36 +107,24 @@ const AppRoutes = () => {
 
 
       {/* Admin Area Routes */}
-      <Route path="/admin" element={<ProtectedRoute allowedRoles={['admin']}><Navigate to="/admin/dashboard" replace /></ProtectedRoute>} />
       <Route 
-        path="/admin/dashboard" 
-        element={<ProtectedRoute allowedRoles={['admin']}><AdminDashboardPage /></ProtectedRoute>} 
-      />
-      <Route 
-        path="/admin/usuarios" 
-        element={<ProtectedRoute allowedRoles={['admin']}><AdminUserManagementPage /></ProtectedRoute>} 
-      />
-      <Route 
-        path="/admin/suscripciones" 
-        element={<ProtectedRoute allowedRoles={['admin']}><AdminSubscriptionManagementPage /></ProtectedRoute>} 
-      />
-      <Route 
-        path="/admin/validaciones" 
-        element={<ProtectedRoute allowedRoles={['admin']}><AdminValidationPage /></ProtectedRoute>} 
-      />
-      <Route 
-        path="/admin/tickets" 
-        element={<ProtectedRoute allowedRoles={['admin']}><ComingSoonPage title="Gestión de Tickets de Soporte" /></ProtectedRoute>} 
-      />
-      <Route 
-        path="/admin/descuentos" 
-        element={<ProtectedRoute allowedRoles={['admin']}><ComingSoonPage title="Gestión de Códigos de Descuento" /></ProtectedRoute>} 
-      />
-       <Route 
-        path="/admin/configuracion" 
-        element={<ProtectedRoute allowedRoles={['admin']}><ComingSoonPage title="Configuración General del Sitio" /></ProtectedRoute>} 
-      />
-
+        path="/admin"
+        element={
+          <ProtectedRoute allowedRoles={['admin']}>
+            <AdminLayout />
+          </ProtectedRoute>
+        }
+      >
+        <Route index element={<Navigate to="dashboard" replace />} />
+        <Route path="dashboard" element={<AdminDashboardPage />} />
+        <Route path="users" element={<AdminUserManagementPage />} /> {/* Changed from /admin/usuarios to users */}
+        <Route path="transactions" element={<AdminSubscriptionManagementPage />} /> {/* Changed from /admin/suscripciones to transactions */}
+        <Route path="coupons" element={<AdminCouponsPage />} /> {/* Updated to AdminCouponsPage */}
+        <Route path="validations" element={<AdminValidationPage />} /> {/* Path changed from /admin/validaciones */}
+        <Route path="tickets" element={<ComingSoonPage title="Gestión de Tickets de Soporte" />} />
+        <Route path="discounts" element={<ComingSoonPage title="Gestión de Códigos de Descuento" />} /> {/* Path changed from /admin/descuentos */}
+        <Route path="settings" element={<ComingSoonPage title="Configuración General del Sitio" />} /> {/* Path changed from /admin/configuracion */}
+      </Route>
 
       <Route path="/terminos" element={<ComingSoonPage title="Términos y Condiciones" />} />
       <Route path="/privacidad" element={<ComingSoonPage title="Política de Privacidad" />} />
